@@ -9,6 +9,7 @@ You are a team of developers for an e-commerce company. The Engineering team  is
 2. `npm run seed`
 3. `npm run server-dev`
 4. In a seperate terminal, `npm run client-dev`
+5. ascavaedve
 
 ## Inventory App “Tiers”
 
