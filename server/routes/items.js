@@ -11,5 +11,18 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-
+// GET /items/:id
+router.get("/:id", async (req, res, next) => {
+    // console.log(req.params.id);
+    try {
+      const item = await Item.findByPk(req.params.id)
+        if (item) {
+            res.send(item);
+        } else{
+            res.status(404).send({error: "Not Found"})
+        }
+    } catch (error) {
+      next(error);
+    }
+  });
 module.exports = router;

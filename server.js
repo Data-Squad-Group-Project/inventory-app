@@ -1,7 +1,7 @@
 const { db } = require("./server/models");
 const app = require("./server/app");
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3600;
 
 const init = async () => {
   try {
