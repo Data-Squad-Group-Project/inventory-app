@@ -11,6 +11,15 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+//POST /items
+router.post("/", async (req, res, next) => {
+  try {
+    const item = await Item.create(req.body);
+    res.status(201).send(item); //201 created
+  } catch (error) {
+    next(error);
+  }
+});
 // GET /items/:id
 router.get("/:id", async (req, res, next) => {
     // console.log(req.params.id);

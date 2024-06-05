@@ -1,10 +1,39 @@
 import React, { useEffect, useState } from "react";
-
+import "/public/style.css";
 import apiURL from "../api";
 
 export const App = () => {
 	const [items, setItems] = useState([]);
 	const [currentItem, setCurrentItem] = useState(null);
+	const [isFormShowing, setIsFormShowing] = useState(false);
+
+	const [name, setName] = useState("");
+	const [description, setDescription] = useState("");
+	const [price, setPrice] = useState (0);
+	const [category, setCategory] = useState ("");
+	const [image, setImage] = useState ("");
+
+	async function addItem(event) {
+		event.preventDefault();
+		const response = await fetch (`${apiURL}/items`,{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({name, description, price, category, image}),
+	});
+
+	if(response.ok) {
+		const newItem = await response.json();
+		setItems([newItem, ...items]);
+		setName("");
+		setDescription("");
+		setPrice(0);
+		setCategory("");
+		setImage("");
+		setIsFormShowing(false);
+	}
+	}
 
 	async function deleteItem(id) {
 		const response = await fetch(`${apiURL}/items/${id}`, {
@@ -52,6 +81,70 @@ export const App = () => {
 		return (
 			<main>
 				<h1>Inventory App</h1>
+				<button onClick ={() => setIsFormShowing(!isFormShowing)}>
+					{isFormShowing ? "Hide Form" : "Show Form"}
+				</button>
+				{isFormShowing && (
+					<form onSubmit={addItem}>
+						<p>
+							<label htmlFor="name"></label>
+							<br />
+							<input
+								type="text"
+								name="name"
+								id="name"
+								value={name}
+								onChange={event => setName(event.target.value)}
+							/>
+						</p>
+						<p>
+							<label htmlFor="description">Description</label>
+							<br />
+							<textarea
+								name="description"
+								id="description"
+								value={description}
+								onChange={event => setDescription(event.target.value)}
+								/>
+						</p>
+						<p>
+							<label htmlFor="price">Price</label>
+							<br />
+							<input
+								type="number"
+								name="price"
+								id="price"
+								value={price}
+								onChange={event => setPrice(event.target.value)}
+								/>
+						</p>
+						<p>
+							<label htmlFor="category">Category</label>
+							<br />
+							<input
+							type="text"
+							name="category"
+							id="category"
+							value={category}
+							onChange={event => setCategory(event.target.value)}
+							/>
+						</p>
+						<p>
+							<label htmlFor="image">Image</label>
+							<br />
+							<input
+							type="url"
+							name="image"
+							id="image"
+							value={image}
+							onChange={event => setImage(event.target.value)}
+							/>
+						</p>
+						<p>
+							<button type="submit">Add Item</button>
+						</p>
+					</form>
+				)}
 				<ul>
 					{items.map(item => (
 						<li key={item.id}>
