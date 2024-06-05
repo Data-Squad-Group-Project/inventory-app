@@ -159,7 +159,7 @@ export const App = () => {
 		);
 	}
 
-	return (
+return (
 		<main>
 			<div className="current-item">
 				<img src={currentItem.image} alt="" />
