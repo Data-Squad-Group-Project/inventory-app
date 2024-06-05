@@ -21,6 +21,7 @@ h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
+
 /* Form styles */
 form {
   margin-bottom: 20px;
@@ -102,8 +103,31 @@ li img {
 }
 
 /* Detail view styles */
-img {
-  max-width: 100%;
-  height: auto;
+.current-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.current-item img {
+  max-width: 200px;
   border-radius: 4px;
+}
+
+.current-item-details {
+  max-width: calc(100% - 220px);
+}
+
+.current-item-details h1 {
+  font-size: 2em;
+  margin: 0 0 10px;
+}
+
+.current-item-details p {
+  margin: 10px 0;
+}
+
+.current-item-buttons {
+  margin-top: 20px;
 }

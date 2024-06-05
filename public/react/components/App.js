@@ -161,16 +161,18 @@ export const App = () => {
 
 	return (
 		<main>
-			<h1>{currentItem.name}</h1>
-			<p>£{currentItem.price.toFixed(2)}</p>
-			<p>{currentItem.description}</p>
-			<img src={currentItem.image} alt="" />
-			<p>
-				<button onClick={() => setCurrentItem(null)}>All Items</button>
-			</p>
-			<p>
-				<button onClick={() => confirmDelete(currentItem.id)}>Delete Item</button>
-			</p>
+			<div className="current-item">
+				<img src={currentItem.image} alt="" />
+				<div className="current-item-details">
+					<h1>{currentItem.name}</h1>
+					<p>£{currentItem.price.toFixed(2)}</p>
+					<p>{currentItem.description}</p>
+					<div className="current-item-buttons">
+						<button onClick={() => setCurrentItem(null)}>All Items</button>
+						<button onClick={() => confirmDelete(currentItem.id)}>Delete Item</button>
+					</div>
+				</div>
+			</div>
 		</main>
 	);
 };
