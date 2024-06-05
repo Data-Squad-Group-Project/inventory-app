@@ -87,7 +87,7 @@ export const App = () => {
 				{isFormShowing && (
 					<form onSubmit={addItem}>
 						<p>
-							<label htmlFor="name"></label>
+							<label htmlFor="name">Name</label>
 							<br />
 							<input
 								type="text"
