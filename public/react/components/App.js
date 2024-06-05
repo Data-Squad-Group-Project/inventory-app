@@ -115,7 +115,7 @@ export const App = () => {
 								name="price"
 								id="price"
 								value={price}
-								onChange={event => setPrice(event.target.value)}
+								onChange={event => setPrice(event.target.valueAsNumber)}
 								/>
 						</p>
 						<p>

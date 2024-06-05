@@ -34,4 +34,18 @@ router.get("/:id", async (req, res, next) => {
       next(error);
     }
   });
+  //DELETE /items
+  router.delete("/:id", async (req, res, next) => {
+    try {
+      const item = await Item.findByPk(req.params.id);
+      if (item) {
+        await item.destroy();
+        res.status(204).send(); // 204 No Content
+      } else {
+        res.status(404).send({ error: "Not Found" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  });
 module.exports = router;
