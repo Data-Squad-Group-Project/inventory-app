@@ -51,7 +51,7 @@ form textarea {
 /* Button styles */
 button {
   background-color: #2667ac;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   padding: 10px 20px;
   margin: 5px;
@@ -61,7 +61,7 @@ button {
 }
 
 button:hover {
-  background-color: #ffffff;
+  background-color: #000000;
 }
 
 button:focus {
@@ -69,7 +69,7 @@ button:focus {
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #ffffff;
   cursor: not-allowed;
 }
 
@@ -84,8 +84,8 @@ ul {
 
 li {
   background-color: #ffffff;
-  padding: 15px;
-  border: 1px solid #ddd;
+  padding: 50px;
+  border: 1px solid #ffffff;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
