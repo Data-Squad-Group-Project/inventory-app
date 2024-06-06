@@ -155,9 +155,11 @@ export const App = () => {
                             <li key={item.id}>
                                 <button onClick={() => setCurrentItem(item)}>
                                     <h3>{item.name}</h3>
+                                    </button>
+                                    <br />
                                     <img src={item.image} alt="" />
                                     <p>£{item.price.toFixed(2)}</p>
-                                </button>
+                                
                             </li>
                         ))}
                     </ul>
