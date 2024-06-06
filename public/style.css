@@ -50,7 +50,7 @@ form textarea {
 
 /* Button styles */
 button {
-  background-color: #007bff;
+  background-color: #2667ac;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -61,7 +61,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #ffffff;
 }
 
 button:focus {
@@ -76,10 +76,10 @@ button:disabled {
 /* List styles */
 ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 2fr)); /* Responsive columns */
+  gap: 50px;
   list-style-type: none;
-  padding: 0;
+  padding: 10px;
 }
 
 li {
@@ -93,7 +93,7 @@ li {
 
 li h2 {
   margin: 10px 0;
-  font-size: 1.2em;
+  font-size: 1.5em;
 }
 
 li img {
@@ -111,7 +111,7 @@ li img {
 }
 
 .current-item img {
-  max-width: 200px;
+  max-width: 500px;
   border-radius: 4px;
 }
 
@@ -152,7 +152,7 @@ li img {
 
 .search-bar:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #000000;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
@@ -163,14 +163,14 @@ li img {
   align-items: flex-start;
   gap: 20px;
   margin-top: 20px;
-  background-color: #ffffff;
+  background-color: #00ff9500;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .current-item img {
-  max-width: 200px;
+  max-width: 300px;
   border-radius: 4px;
 }
 
@@ -224,7 +224,7 @@ li img {
 }
 
 .other-items-list li img {
-  max-width: 100%;
+  max-width: 15%;
   height: auto;
   border-radius: 4px;
 }
@@ -233,4 +233,3 @@ li img {
   margin: 10px 0;
   font-size: 1.2em;
 }
-

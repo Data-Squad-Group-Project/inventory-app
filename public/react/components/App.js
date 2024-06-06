@@ -195,7 +195,7 @@ export const App = () => {
                 </div>
             </div>
             <div className="other-items">
-                <h2>Other Items you may be interested in...</h2>
+                <h2>Other items you may be interested in...</h2>
                 <ul className="other-items-list">
                     {getOtherItems().map(item => (
                         <li key={item.id}>
