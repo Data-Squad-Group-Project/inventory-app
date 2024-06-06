@@ -9,9 +9,8 @@ export const App = () => {
     const [items, setItems] = useState([]);
     const [currentItem, setCurrentItem] = useState(null);
     const [isFormShowing, setIsFormShowing] = useState(false);
-
-	const [isCreateFormShowing, setIsCreateFormShowing] = useState(false);
-	const [isUpdateFormShowing, setIsUpdateFormShowing] = useState(false);
+    const [isCreateFormShowing, setIsCreateFormShowing] = useState(false);
+    const [isUpdateFormShowing, setIsUpdateFormShowing] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
     async function addItem(data) {
@@ -31,31 +30,31 @@ export const App = () => {
     }
 
     async function updateItem(id, data) {
-		const response = await fetch(`${apiURL}/items/${id}`, {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		});
+        const response = await fetch(`${apiURL}/items/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
 
-		if (response.ok) {
-			const updatedItem = await response.json();
+        if (response.ok) {
+            const updatedItem = await response.json();
 
-			const updatedItems = items.map(item => {
-				if (item.id === id) {
-					return updatedItem;
-				} else {
-					return item;
-				}
-			});
+            const updatedItems = items.map(item => {
+                if (item.id === id) {
+                    return updatedItem;
+                } else {
+                    return item;
+                }
+            });
 
-			setItems(updatedItems);
-			setCurrentItem(updatedItem);
+            setItems(updatedItems);
+            setCurrentItem(updatedItem);
 
-			setIsUpdateFormShowing(false);
-		}
-	}
+            setIsUpdateFormShowing(false);
+        }
+    }
 
     async function deleteItem(id) {
         const response = await fetch(`${apiURL}/items/${id}`, {
@@ -142,7 +141,7 @@ export const App = () => {
                         <p><strong>Description:</strong> {currentItem.description}</p>
                         <div className="current-item-buttons">
                             <button onClick={() => setCurrentItem(null)}>All Items</button>
-                            <button onClick={() => confirmDelete(currentItem.id)}>Delete Item</button>
+                            <button onClick={() => deleteItem(currentItem.id)}>Delete Item</button>
                         </div>
                     </div>
                 </div>
@@ -154,9 +153,11 @@ export const App = () => {
                     <ul className="other-items-list">
                         {getOtherItems().map(item => (
                             <li key={item.id}>
-                                <h3>{item.name}</h3>
-                                <img src={item.image} alt="" />
-                                <p>£{item.price.toFixed(2)}</p>
+                                <button onClick={() => setCurrentItem(item)}>
+                                    <h3>{item.name}</h3>
+                                    <img src={item.image} alt="" />
+                                    <p>£{item.price.toFixed(2)}</p>
+                                </button>
                             </li>
                         ))}
                     </ul>
