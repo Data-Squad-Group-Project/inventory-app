@@ -1,41 +1,63 @@
 import React, { useEffect, useState } from "react";
 import "/public/style.css";
 import apiURL from "../api";
+import UpdateItemForm from "./UpdateItemForm";
+import Inventory from "./Inventory";
+import CreateItemForm from "./CreateItemForm";
 
 export const App = () => {
     const [items, setItems] = useState([]);
     const [currentItem, setCurrentItem] = useState(null);
     const [isFormShowing, setIsFormShowing] = useState(false);
 
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
-    const [category, setCategory] = useState("");
-    const [image, setImage] = useState("");
-
+	const [isCreateFormShowing, setIsCreateFormShowing] = useState(false);
+	const [isUpdateFormShowing, setIsUpdateFormShowing] = useState(false);
+    //Search Bar (Do not delete)
     const [searchQuery, setSearchQuery] = useState("");
 
-    async function addItem(event) {
-        event.preventDefault();
+    async function addItem(data) {
         const response = await fetch(`${apiURL}/items`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name, description, price, category, image }),
+            body: JSON.stringify(data),
         });
 
         if (response.ok) {
             const newItem = await response.json();
             setItems([newItem, ...items]);
-            setName("");
-            setDescription("");
-            setPrice(0);
-            setCategory("");
-            setImage("");
             setIsFormShowing(false);
         }
     }
+
+    async function updateItem(id, data) {
+		const response = await fetch(`${apiURL}/items/${id}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (response.ok) {
+			const updatedItem = await response.json();
+
+			const index = items.findIndex(item => {
+				if (item.id === id) {
+					return true;
+				} else {
+					return false;
+				}
+			});
+
+			const updatedItems = items.toSpliced(index, 1, updatedItem);
+			setItems(updatedItems);
+			setCurrentItem(updatedItem);
+
+			setIsUpdateFormShowing(false);
+		}
+	}
 
     async function deleteItem(id) {
         const response = await fetch(`${apiURL}/items/${id}`, {
@@ -101,86 +123,24 @@ export const App = () => {
                         className="search-bar"
                     />
                 </div>
-                <button onClick={() => setIsFormShowing(!isFormShowing)}>
-                    {isFormShowing ? "Hide Form" : "Show Form"}
+                <button onClick={() => setIsCreateFormShowing(!isCreateFormShowing)}>
+					{isCreateFormShowing ? "Hide Form" : "Show Form"}
                 </button>
-                {isFormShowing && (
-                    <form onSubmit={addItem}>
-                        <p>
-                            <label htmlFor="name">Name</label>
-                            <br />
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor="description">Description</label>
-                            <br />
-                            <textarea
-                                name="description"
-                                id="description"
-                                value={description}
-                                onChange={(event) => setDescription(event.target.value)}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor="price">Price</label>
-                            <br />
-                            <input
-                                type="number"
-                                name="price"
-                                id="price"
-                                value={price}
-                                onChange={(event) => setPrice(event.target.valueAsNumber)}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor="category">Category</label>
-                            <br />
-                            <input
-                                type="text"
-                                name="category"
-                                id="category"
-                                value={category}
-                                onChange={(event) => setCategory(event.target.value)}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor="image">Image</label>
-                            <br />
-                            <input
-                                type="url"
-                                name="image"
-                                id="image"
-                                value={image}
-                                onChange={(event) => setImage(event.target.value)}
-                            />
-                        </p>
-                        <p>
-                            <button type="submit">Add Item</button>
-                        </p>
-                    </form>
-                )}
-                <ul>
-                    {filteredItems.map(item => (
-                        <li key={item.id}>
-                            <h2>
-                                <button onClick={() => setCurrentItem(item)}>{item.name}</button>
-                            </h2>
-                            <img src={item.image} alt="" />
-                        </li>
-                    ))}
-                </ul>
+                {isCreateFormShowing && <CreateItemForm addItem={addItem} />}
+				<Inventory items={items} setCurrentItem={setCurrentItem} />
             </main>
         );
     }
 
     return (
         <main>
+            <div>
+            <button onClick={() => setIsUpdateFormShowing(!isUpdateFormShowing)}>
+				{isUpdateFormShowing ? "Hide Form" : "Show Form"}
+			</button>
+			{isUpdateFormShowing && <UpdateItemForm {...currentItem} updateItem={updateItem} />}
+            </div>
+
             <div className="current-item">
                 <img src={currentItem.image} alt="" />
                 <div className="current-item-details">
