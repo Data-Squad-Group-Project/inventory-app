@@ -113,7 +113,7 @@ export const App = () => {
     if (!currentItem) {
         return (
             <main>
-                <h1>Inventory App</h1>
+                <h1>Inventory App, please browse our wares</h1>
                 <div className="search-bar-container">
                     <input
                         type="text"
