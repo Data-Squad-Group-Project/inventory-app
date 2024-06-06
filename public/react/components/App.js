@@ -12,7 +12,6 @@ export const App = () => {
 
 	const [isCreateFormShowing, setIsCreateFormShowing] = useState(false);
 	const [isUpdateFormShowing, setIsUpdateFormShowing] = useState(false);
-    //Search Bar (Do not delete)
     const [searchQuery, setSearchQuery] = useState("");
 
     async function addItem(data) {
@@ -43,15 +42,14 @@ export const App = () => {
 		if (response.ok) {
 			const updatedItem = await response.json();
 
-			const index = items.findIndex(item => {
+			const updatedItems = items.map(item => {
 				if (item.id === id) {
-					return true;
+					return updatedItem;
 				} else {
-					return false;
+					return item;
 				}
 			});
 
-			const updatedItems = items.toSpliced(index, 1, updatedItem);
 			setItems(updatedItems);
 			setCurrentItem(updatedItem);
 
@@ -68,13 +66,6 @@ export const App = () => {
             const filteredItems = items.filter(item => item.id !== id);
             setItems(filteredItems);
             setCurrentItem(null);
-        }
-    }
-
-    function confirmDelete(id) {
-        const confirmed = window.confirm("Are you sure you want to delete this item?");
-        if (confirmed) {
-            deleteItem(id);
         }
     }
 
@@ -110,62 +101,67 @@ export const App = () => {
         return shuffledItems.slice(0, 3);
     };
 
-    if (!currentItem) {
-        return (
-            <main>
-                <h1>Inventory App, please browse our wares</h1>
-                <div className="search-bar-container">
-                    <input
-                        type="text"
-                        placeholder="Search items..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="search-bar"
-                    />
-                </div>
-                <button onClick={() => setIsCreateFormShowing(!isCreateFormShowing)}>
-					{isCreateFormShowing ? "Hide Form" : "Show Form"}
-                </button>
-                {isCreateFormShowing && <CreateItemForm addItem={addItem} />}
-				<Inventory items={items} setCurrentItem={setCurrentItem} />
-            </main>
-        );
-    }
-
     return (
         <main>
-            <div>
-            <button onClick={() => setIsUpdateFormShowing(!isUpdateFormShowing)}>
-				{isUpdateFormShowing ? "Hide Form" : "Show Form"}
-			</button>
-			{isUpdateFormShowing && <UpdateItemForm {...currentItem} updateItem={updateItem} />}
-            </div>
+            {currentItem && (
+                <div>
+                    <button onClick={() => setIsUpdateFormShowing(!isUpdateFormShowing)}>
+                        {isUpdateFormShowing ? "Hide Form" : "Show Form"}
+                    </button>
+                    {isUpdateFormShowing && <UpdateItemForm {...currentItem} updateItem={updateItem} />}
+                </div>
+            )}
 
-            <div className="current-item">
-                <img src={currentItem.image} alt="" />
-                <div className="current-item-details">
-                    <h1>{currentItem.name}</h1>
-                    <p><strong>Price:</strong> £{currentItem.price.toFixed(2)}</p>
-                    <p><strong>Category:</strong> {currentItem.category}</p>
-                    <p><strong>Description:</strong> {currentItem.description}</p>
-                    <div className="current-item-buttons">
-                        <button onClick={() => setCurrentItem(null)}>All Items</button>
-                        <button onClick={() => confirmDelete(currentItem.id)}>Delete Item</button>
+            {!currentItem && (
+                <>
+                    <h1>Inventory App, please browse our wares</h1>
+                    <div className="search-bar-container">
+                        <input
+                            type="text"
+                            placeholder="Search items..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="search-bar"
+                        />
+                    </div>
+                    <button onClick={() => setIsCreateFormShowing(!isCreateFormShowing)}>
+                        {isCreateFormShowing ? "Hide Form" : "Show Form"}
+                    </button>
+                    {isCreateFormShowing && <CreateItemForm addItem={addItem} />}
+                    <Inventory items={filteredItems} setCurrentItem={setCurrentItem} />
+                </>
+            )}
+
+            {currentItem && (
+                <div className="current-item">
+                    <img src={currentItem.image} alt="" />
+                    <div className="current-item-details">
+                        <h1>{currentItem.name}</h1>
+                        <p><strong>Price:</strong> £{currentItem.price.toFixed(2)}</p>
+                        <p><strong>Category:</strong> {currentItem.category}</p>
+                        <p><strong>Description:</strong> {currentItem.description}</p>
+                        <div className="current-item-buttons">
+                            <button onClick={() => setCurrentItem(null)}>All Items</button>
+                            <button onClick={() => confirmDelete(currentItem.id)}>Delete Item</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="other-items">
-                <h2>Other items you may be interested in...</h2>
-                <ul className="other-items-list">
-                    {getOtherItems().map(item => (
-                        <li key={item.id}>
-                            <h3>{item.name}</h3>
-                            <img src={item.image} alt="" />
-                            <p>£{item.price.toFixed(2)}</p>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            )}
+
+            {currentItem && (
+                <div className="other-items">
+                    <h2>Other items you may be interested in...</h2>
+                    <ul className="other-items-list">
+                        {getOtherItems().map(item => (
+                            <li key={item.id}>
+                                <h3>{item.name}</h3>
+                                <img src={item.image} alt="" />
+                                <p>£{item.price.toFixed(2)}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </main>
     );
 };
