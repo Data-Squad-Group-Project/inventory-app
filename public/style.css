@@ -76,7 +76,7 @@ button:disabled {
 /* List styles */
 ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 2fr)); /* Responsive columns */
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* Responsive columns */
   gap: 50px;
   list-style-type: none;
   padding: 10px;
